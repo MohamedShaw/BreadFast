@@ -1,0 +1,17 @@
+export default {
+  statusBar: '#B33F38',
+  foreground: '#484848',
+  primary: '#1B9595',
+  secondary: '#FF9900',
+  thirdly: '#ee4037',
+  primaryLight: '#00397A',
+  safe: '#007F41',
+  warning: '#FFC107',
+  error: '#D0021B',
+  danger: '#C62828',
+  disabled: '#d1d5d8',
+  grey: '#ACB5BB',
+  darkgrey: '#858F96',
+  inputBorderColor: '#858F96',
+  inputBorderWidth: 0.5,
+};
