@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text as NativeText } from 'react-native';
+import { Animated } from 'react-native';
 import { connect } from 'react-redux';
 
 import { getTheme } from './Theme';
@@ -17,9 +17,8 @@ import {
   paddingStyles,
   marginStyles,
 } from './Base';
-import { responsiveFontSize } from './utils/responsiveDimensions';
 
-class Text extends PureComponent {
+class AppAnimatedText extends PureComponent {
   static propTypes = {
     ...BasePropTypes,
   };
@@ -32,7 +31,7 @@ class Text extends PureComponent {
     const { rtl, children, style, translateNumbers, ...rest } = this.props;
 
     return (
-      <NativeText
+      <Animated.text
         {...rest}
         style={[
           fontSizeStyles(this.props),
@@ -47,16 +46,11 @@ class Text extends PureComponent {
           {
             textAlignVertical: 'center',
           },
-          this.props.lineHeight
-            ? {
-                lineHeight: responsiveFontSize(this.props.lineHeight),
-              }
-            : {},
           style,
         ]}
       >
         {convertNumbers(children, translateNumbers ? rtl : false)}
-      </NativeText>
+      </Animated.text>
     );
   }
 }
@@ -65,4 +59,4 @@ const mapStateToProps = state => ({
   rtl: state.lang.rtl,
 });
 
-export default connect(mapStateToProps)(Text);
+export default connect(mapStateToProps)(AppAnimatedText);

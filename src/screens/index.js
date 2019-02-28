@@ -1,18 +1,16 @@
-import React, {Component} from "react"
-import { Navigation } from "react-native-navigation";
-
+import React, { Component } from 'react';
+import { Navigation } from 'react-native-navigation';
 
 import { Provider } from 'react-redux';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import store from '../store';
 
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
-import FindRest from "./FindRest";
-import LocationMap from "./mapScreen/LocationMap";
+import FindRest from './FindRest';
+import LocationMap from './mapScreen/LocationMap';
+import ProductList from './productList/ProductList';;
 
-
-export const registerScreens=()=> {
-
+export const registerScreens = () => {
   Navigation.registerComponentWithRedux(
     'FindRest',
     () => gestureHandlerRootHOC(FindRest),
@@ -25,12 +23,10 @@ export const registerScreens=()=> {
     Provider,
     store,
   );
- 
- 
-
-
-
-
-
-}
-
+  Navigation.registerComponentWithRedux(
+    'productList',
+    () => gestureHandlerRootHOC(ProductList),
+    Provider,
+    store,
+  );
+};

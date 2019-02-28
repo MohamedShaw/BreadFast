@@ -36,15 +36,10 @@ class Button extends PureComponent {
     ...getTheme().button,
   };
 
-  static getDerivedStateFromProps = (props, state) => ({
-    processing: props.processing,
-  });
-
   constructor(props) {
     super(props);
 
     this.state = {
-      processing: props.processing,
       width: 0,
       height: 0,
       layoutReady: false,
@@ -57,7 +52,7 @@ class Button extends PureComponent {
 
   onPress = event => {
     if (this.props.disabled) return;
-    if (this.state.processing) return;
+    if (this.props.processing) return;
 
     this.props.onPress(event);
   };
@@ -99,9 +94,8 @@ class Button extends PureComponent {
       disabledColor,
       transparent,
       bold,
+      processing,
     } = this.props;
-
-    const { processing } = this.state;
 
     const bg = disabled ? disabledBackgroundColor : backgroundColor;
     const fg = disabled ? disabledColor : color;

@@ -68,6 +68,7 @@ subprojects {
         }
     }
 }
+
 ext {
     buildToolsVersion = "27.0.3"
     minSdkVersion = 19
@@ -75,6 +76,7 @@ ext {
     targetSdkVersion = 27
     supportLibVersion = "27.1.0"
 }
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.4'
@@ -84,7 +86,6 @@ task wrapper(type: Wrapper) {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
 
 subprojects {
    project.configurations.all {

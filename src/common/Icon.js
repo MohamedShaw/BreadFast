@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { getIconType, getIconSizeScaleFix } from './utils/icon';
 import { getTheme } from './Theme';
+import { responsiveFontSize } from './utils/responsiveDimensions';
 
 import {
   BasePropTypes,
@@ -66,6 +67,11 @@ class Icon extends PureComponent {
             textAlignVertical: 'center',
             textAlign: 'center',
           },
+          this.props.lineHeight
+            ? {
+                lineHeight: responsiveFontSize(this.props.lineHeight),
+              }
+            : {},
         ]}
       />
     );

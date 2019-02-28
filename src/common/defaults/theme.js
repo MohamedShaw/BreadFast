@@ -86,6 +86,18 @@ export default {
     bw: 1,
     borderRadius: 4,
     height: 7.5,
+    disalbedBackgroundColor: '#E6E8EA',
+  },
+  wheelPicker: {
+    size: 5.5,
+    color: '#484848',
+    backgroundColor: 'white',
+    paddingVertical: 4,
+    borderRadius: 4,
+    height: 7.5,
+    placeholderColor: '#858F96',
+    borderColor: 'inputBorderColor',
+    borderWidth: 1,
   },
   datePicker: {
     size: 5.5,

@@ -1,7 +1,7 @@
 export default {
   statusBar: '#B33F38',
   foreground: '#484848',
-  primary: '#1B9595',
+  primary: '#F56363',
   secondary: '#FF9900',
   thirdly: '#ee4037',
   primaryLight: '#00397A',
@@ -14,4 +14,5 @@ export default {
   darkgrey: '#858F96',
   inputBorderColor: '#858F96',
   inputBorderWidth: 0.5,
+  star: '#FFC850',
 };
