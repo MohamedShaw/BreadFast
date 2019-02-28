@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, RefreshControl } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  RefreshControl,
+  FlatList,
+} from 'react-native';
 
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
@@ -14,7 +20,7 @@ import {
   AppSpinner,
 } from '../../common';
 import cover from '../../assets/imgs/cover.png';
-import { AppHeader } from '../../component';
+import { AppHeader, ProductCart } from '../../component';
 
 class ProductList extends Component {
   constructor(props) {
@@ -71,26 +77,32 @@ class ProductList extends Component {
             <AppSpinner size={10} />
           </AppView>
         ) : (
-          <AppScrollView
-            stretch
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh}
-              />
-            }
-          >
+          <AppScrollView stretch center>
             {this.state.products.map((i, index) => (
               <>
                 <AppView stretch center bc="primary" bw={1} key={index}>
                   <AppText>{i.name}</AppText>
                   <AppText>{i.products.length}</AppText>
                 </AppView>
-                {i.products.map((x, y) => (
-                  <AppText key={index}>
-                    {x.name} {x.price}
-                  </AppText>
-                ))}
+                {/* {i.products.map((x, y) => (
+                  <ProductCart />
+                ))} */}
+                <FlatList
+                  data={i.products}
+                  renderItem={({ item }) => <ProductCart />}
+                  numColumns={2}
+                  horizontal={false}
+                  contentContainerStyle={
+                    // this.props.columns > 1
+                    {
+                      // flex: 1,
+                      // flexDirection: 'row',
+                      // flexWrap: 'wrap',
+                      // justifyContent: this.state.loading ? 'center' : 'space-between',
+                    }
+                    // : {}
+                  }
+                />
               </>
             ))}
           </AppScrollView>
