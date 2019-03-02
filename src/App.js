@@ -8,14 +8,16 @@ import {
 
 const { Navigation } = require('react-native-navigation');
 const { Platform } = require('react-native');
-
+import {
+  AppNavigation 
+} from "./common";
 export const start = () => {
   registerScreens();
   Navigation.events().registerAppLaunchedListener(async () => {
     Navigation.setDefaultOptions({
       statusBar: {
         visible: true,
-        backgroundColor: '#2CB3B5',
+        backgroundColor: '#A80080',
       },
       topBar: {
         drawBehind: true,
@@ -28,19 +30,8 @@ export const start = () => {
       initBackgroundGeolocation(store.dispatch, store.getState);
     });
 
-    Navigation.setRoot({
-      root: {
-        stack: {
-          id: 'TEST',
-          children: [
-            {
-              component: {
-                name: 'productList',
-              },
-            },
-          ],
-        },
-      },
+    AppNavigation.init('MAIN_STACK', {
+      name: 'productList',
     });
   });
 };

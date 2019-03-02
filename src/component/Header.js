@@ -8,14 +8,18 @@ import {
   AppButton,
   AppIcon,
   getColors,
+  AppNavigation
 } from '../common';
+
+import { connect } from 'react-redux';
+
 
 import { Navigation } from "react-native-navigation";
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 54 : 56;
 
 
 
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     hideBack: PropTypes.bool,
     rowItems: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
@@ -25,6 +29,8 @@ export default class Header extends Component {
     hideBack: false,
     rowItems: [],
   };
+
+
 
   goBack = () => {
     if (this.props.backHandler) {
@@ -49,10 +55,53 @@ export default class Header extends Component {
       );
     }
 
-   
-  
+
+
     return <AppView stretch flex />;
   };
+
+
+
+  renderCounter = () => {
+    if (this.props.totalCounter > 0) {
+
+      return (
+        <AppView
+          flex
+          center
+          circleRadius={5}
+          backgroundColor="#195945"
+          style={{
+            position: 'absolute',
+            top: 3,
+            right: 2
+          }} >
+          <AppText color={this.props.totalCounter <= 98 ? "white" : "red"} numberOfLines={1} size={this.props.totalCounter >= 70 ? 4 : 5} >{this.props.totalCounter <= 98 ? this.props.totalCounter : "+99"}</AppText>
+        </AppView>
+      );
+    }
+  };
+
+  renderCart = () => {
+    const { cart, totalCounter } = this.props
+
+    return (
+      <AppView stretch marginHorizontal={5}>
+        <AppButton
+          leftIcon={<AppIcon name="shopping-cart" type="font-awesome" size={12} color="darkgrey" />}
+          backgroundColor="transparent"
+          size={8}
+          ph={10}
+          onPress={() => {
+            AppNavigation.push("shoppingCart")
+          }}
+          flex
+        />
+
+        {this.renderCounter()}
+      </AppView>
+    )
+  }
 
   renderLeft = () => {
     const { menu, hideBack } = this.props;
@@ -60,41 +109,42 @@ export default class Header extends Component {
     if (menu)
       return (
         <AppButton
-          leftIcon={<AppIcon name="menu" type="entypo" color="white" size={13} />}
+          leftIcon={<AppIcon name="menu" type="entypo" size={13} />}
           backgroundColor="transparent"
           size={8}
           ph={10}
-          onPress={() => {}}
+          onPress={() => { }}
           flex
         />
       );
 
-  
+
     if (hideBack) {
       return <AppView stretch flex />;
     }
 
     return (
-      <AppView flex>
+      <AppView flex center>
         <AppButton
           flex
           color="foreground"
-          leftIcon={<AppIcon flip name="ios-arrow-back" type="ion" size={12} color ="white" />}
+          leftIcon={<AppIcon  name="ios-arrow-back" type="ion" size={12} />}
           onPress={this.goBack}
           paddingHorizontal={8}
           backgroundColor="transparent"
+          
         />
       </AppView>
     );
   };
 
   render() {
-    const { title, flat } = this.props;
+    const { title, flat, cart } = this.props;
     return (
-      <SafeAreaView style={{ backgroundColor: '#1B9595', alignSelf: 'stretch' }}>
+      <SafeAreaView style={{ backgroundColor: 'white', alignSelf: 'stretch' }}>
         <AppView
           stretch
-          backgroundColor="#1B9595"
+
           style={{
             height: APPBAR_HEIGHT,
           }}
@@ -102,16 +152,42 @@ export default class Header extends Component {
           spaceBetween
           borderBottomColor="inputBorderColor"
           borderBottomWidth={0.5}
-        >
-          {this.renderLeft()}
-          <AppView flex={3} center>
-            <AppText size={6} bold numberOfLines={1} color="white">
-              {title}
-            </AppText>
-          </AppView>
-          {this.renderRight()}
+        >{this.props.lang === "en" ?
+          <>
+            {this.renderLeft()}
+            <AppView flex={3} center>
+              <AppText size={7} bold numberOfLines={1} >
+                {title}
+              </AppText>
+            </AppView>
+            {cart ? this.renderCart() : this.renderRight()}
+          </>
+          :
+          <>
+            {cart ? this.renderCart() : this.renderRight()}
+
+            <AppView flex={3} center>
+              <AppText size={7} bold numberOfLines={1} >
+                {title}
+              </AppText>
+            </AppView>
+            {this.renderLeft()}
+          </>}
         </AppView>
       </SafeAreaView>
     );
   }
 }
+
+
+const mapStateToProps = state => ({
+
+  totalCounter: state.shoppingCart.totalCounter,
+  lang: state.lang.lang
+
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(Header);

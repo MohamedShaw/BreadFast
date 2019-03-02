@@ -20,7 +20,7 @@ import {
   AppSpinner,
 } from '../../common';
 import cover from '../../assets/imgs/cover.png';
-import { AppHeader, ProductCart } from '../../component';
+import { AppHeader, ProductCard } from '../../component';
 
 class ProductList extends Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class ProductList extends Component {
           token: '3f2o3hf2ougo2gbvg3lgb3lqpi1321d',
         },
       );
-      console.log('REQUEST PARAMETERS ======>>>>>>>>>>>>', response.data.data);
 
       this.setState({
         loading: false,
@@ -71,37 +70,27 @@ class ProductList extends Component {
   render() {
     return (
       <AppView stretch flex>
-        <AppHeader title="قائمه الطلبات" />
+        <AppHeader title="قائمه الطلبات"  cart hideBack/>
         {this.state.loading ? (
           <AppView stretch center flex>
             <AppSpinner size={10} />
           </AppView>
         ) : (
-          <AppScrollView stretch center>
+          <AppScrollView stretch center flex>
             {this.state.products.map((i, index) => (
               <>
-                <AppView stretch center bc="primary" bw={1} key={index}>
-                  <AppText>{i.name}</AppText>
+                <AppView stretch  key={index} marginHorizontal={5} marginTop={15} left>
+                  <AppText bold>{i.name}</AppText>
                   <AppText>{i.products.length}</AppText>
                 </AppView>
-                {/* {i.products.map((x, y) => (
-                  <ProductCart />
-                ))} */}
+               
                 <FlatList
                   data={i.products}
-                  renderItem={({ item }) => <ProductCart />}
+                  renderItem={({ item }) => <ProductCard data={item}/>}
                   numColumns={2}
                   horizontal={false}
-                  contentContainerStyle={
-                    // this.props.columns > 1
-                    {
-                      // flex: 1,
-                      // flexDirection: 'row',
-                      // flexWrap: 'wrap',
-                      // justifyContent: this.state.loading ? 'center' : 'space-between',
-                    }
-                    // : {}
-                  }
+                  keyExtractor={i.products.id}
+                 
                 />
               </>
             ))}
@@ -114,6 +103,8 @@ class ProductList extends Component {
 
 const mapStateToProps = state => ({
   currentLocation: state.location.current,
+  cart: state.shoppingCart.cart,
+
 });
 
 export default connect(
