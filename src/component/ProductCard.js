@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import I18n from 'react-native-i18n';
+import { Navigation } from 'react-native-navigation';
 import {
   AppScrollView,
   AppView,
@@ -8,23 +9,20 @@ import {
   AppText,
   AppButton,
   AppIcon,
-  AppNavigation
+  AppNavigation,
 } from '../common';
 import colors from '../common/defaults/colors';
 
 import cover from '../assets/imgs/cover.png';
 
-import { Navigation } from "react-native-navigation";
+import { addProductToCart } from '../actions/shoppingCart';
 
-import { addProductToCart } from "../actions/shoppingCart";
 class ProviderCard extends Component {
   state = {
     counter: 1,
   };
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   renderProviderImg = () => {
     const { data } = this.props;
@@ -36,10 +34,7 @@ class ProviderCard extends Component {
         resizeMode="stretch"
         borderRadius={10}
         equalSize={28}
-
         marginRight={10}
-
-
       />
     );
   };
@@ -47,7 +42,7 @@ class ProviderCard extends Component {
   renderProductDetailes = () => {
     const { data } = this.props;
     return (
-      <AppView stretch left >
+      <AppView stretch left>
         <AppText>{data.name}</AppText>
         <AppText>EGP. {data.price}</AppText>
       </AppView>
@@ -58,14 +53,13 @@ class ProviderCard extends Component {
     let counter = this.state.counter + amount;
     if (counter <= 0) counter = 0;
 
-
     this.setState({
-      counter: counter,
+      counter,
     });
   };
 
   renderAction = () => {
-    const { } = this.props;
+    const {} = this.props;
     return (
       <AppView row stretch marginVertical={4}>
         <AppButton
@@ -76,12 +70,19 @@ class ProviderCard extends Component {
             // this.setState({
             //   counter: this.state.counter + 1,
             // });
-            this.change(1)
+            this.change(1);
           }}
           height={6}
         />
-        <AppView flex={2} bw={1} bc="grey" stretch marginHorizontal={3} height={6}
-          center>
+        <AppView
+          flex={2}
+          bw={1}
+          bc="grey"
+          stretch
+          marginHorizontal={3}
+          height={6}
+          center
+        >
           <AppText>{this.state.counter}</AppText>
         </AppView>
         <AppButton
@@ -89,37 +90,37 @@ class ProviderCard extends Component {
           leftIcon={<AppIcon name="minus" type="ant" color="darkgrey" />}
           backgroundColor="#F0F0F0"
           onPress={() => {
-            // 
-            this.change(-1)
+            //
+            this.change(-1);
           }}
           height={6}
-
         />
       </AppView>
     );
   };
 
   renderAddToCart = () => {
-    const {data } = this.props;
+    const { data } = this.props;
     return (
       <AppView
         bc="grey"
         bw={1}
         onPress={() => {
           // alert('add');
-          this.props.onAddToCart(data, this.state.counter)
+          this.props.onAddToCart(data, this.state.counter);
           this.setState({
-            counter : 1
-          })
-
+            counter: 1,
+          });
         }}
-        backgroundColor = {this.state.counter > 1 ? "#A80080" : "white"}
+        backgroundColor={this.state.counter > 1 ? '#A80080' : 'white'}
         stretch
         paddingVertical={5}
         center
         height={6}
       >
-        <AppText color ={this.state.counter > 1 ?"white" :null}>ADD TO CART</AppText>
+        <AppText color={this.state.counter > 1 ? 'white' : null}>
+          Aaa To Cart
+        </AppText>
       </AppView>
     );
   };
@@ -131,27 +132,22 @@ class ProviderCard extends Component {
       <AppView
         style={style}
         backgroundColor="white"
-       
         stretch
         // flex
         {...rest}
         marginHorizontal={3}
         width={45}
-
         paddingVertical={2}
         paddingHorizontal={2}
-
         onPress={() => {
-
-          
-          AppNavigation.push( {
-            name: 'productDetails', 
-            passProps:{
-              data: this.props.data
-            }
-          })
+          AppNavigation.push({
+            name: 'productDetails',
+            passProps: {
+              data: this.props.data,
+              counter: this.state.counter,
+            },
+          });
         }}
-       
         marginTop={5}
       >
         {this.renderProviderImg()}
@@ -166,12 +162,12 @@ const mapStateToProps = state => ({
   rtl: state.lang.rtl,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-      onAddToCart: (product, counter) => dispatch(addProductToCart(product, counter)),
+const mapDispatchToProps = dispatch => ({
+  onAddToCart: (product, counter) =>
+    dispatch(addProductToCart(product, counter)),
+});
 
-  };
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProviderCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProviderCard);

@@ -1,7 +1,7 @@
 export default {
   statusBar: '#A80080',
   foreground: '#484848',
-  primary: '#A80080 ',
+  primary: '#A80080',
   secondary: '#FF9900',
   thirdly: '#ee4037',
   primaryLight: '#00397A',
