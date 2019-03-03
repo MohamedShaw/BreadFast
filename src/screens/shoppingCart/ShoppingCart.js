@@ -37,7 +37,7 @@ class ShoppingCart extends Component {
               borderBottomWidth={1}
               marginHorizontal={5}
             />
-            <AppScrollView stretch center paddingBottom={30}>
+            <AppScrollView stretch center paddingBottom={30} backgroundColor="white">
               {this.props.cart.map((item, index) => (
                 <CartItem data={item} />
               ))}

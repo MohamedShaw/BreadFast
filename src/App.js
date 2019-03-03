@@ -30,7 +30,7 @@ export const start = async () => {
     // });
 
     let cart = '';
-    let total = '';
+    let total = 0;
     let counter = 0;
 
     try {
@@ -45,10 +45,10 @@ export const start = async () => {
       cart = JSON.parse(cart);
       total = JSON.parse(total);
 
+      counter = JSON.parse(counter)
       store.getState().shoppingCart.cart = cart;
-      store.getState().shoppingCart.totalPrice = total;
-      store.getState().shoppingCart.totalCounter = counter;
-      console.log('&&&&&&&&&&&&&&', counter);
+      store.getState().shoppingCart.totalPrice = +total;
+      store.getState().shoppingCart.totalCounter = +counter;
     }
 
     AppNavigation.init('MAIN_STACK', {

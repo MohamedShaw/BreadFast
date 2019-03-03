@@ -33,9 +33,9 @@ const shoppingCart = (state = initialState, action) => {
         newCart = [...newCart, addNewObj];
       }
 
-      totalCounter += action.payload.counter;
+      totalCounter += +action.payload.counter;
 
-      totalPrice += +action.payload.price * action.payload.counter;
+      totalPrice += +action.payload.price * +action.payload.counter;
 
       AsyncStorage.setItem('@CART', JSON.stringify(newCart));
       AsyncStorage.setItem('@TOTAL', JSON.stringify(totalPrice));
@@ -50,6 +50,8 @@ const shoppingCart = (state = initialState, action) => {
     case types.FILTER_CART:
       const cartFilter = state.cart.filter(item => item.counter > 0);
       console.log('FILTER CARD =====>>>>', cartFilter);
+      AsyncStorage.setItem('@CART', JSON.stringify(cartFilter));
+
 
       return {
         ...state,
@@ -62,9 +64,14 @@ const shoppingCart = (state = initialState, action) => {
       const counterRemoved = action.payload.counter;
       const priceRemoved = action.payload.priceOfProdut;
 
+
       const cartAfterRemoved = state.cart.filter(item => item.id !== itemId);
 
       // console.log("remove ====", cartRemoved);
+
+      AsyncStorage.setItem('@CART', JSON.stringify(cartAfterRemoved));
+      AsyncStorage.setItem('@TOTAL', JSON.stringify(+(state.totalPrice - priceRemoved)));
+      AsyncStorage.setItem('@COUNTER', JSON.stringify(+(state.totalCounter - counterRemoved)));
 
       return {
         ...state,

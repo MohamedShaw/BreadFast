@@ -29,6 +29,7 @@ class ProductList extends Component {
     this.state = {
       refreshing: false,
       loading: true,
+      errors: false
     };
   }
 
@@ -61,6 +62,7 @@ class ProductList extends Component {
     } catch (error) {
       this.setState({
         loading: false,
+        errors:true
       });
       alert('حاول مره اخري');
 
@@ -83,7 +85,7 @@ class ProductList extends Component {
           <AppView stretch center flex>
             <AppSpinner size={15} color="primary" />
           </AppView>
-        ) : (
+        ) :this.state.errors ? <AppView stretch flex center><AppText>Some Thing Wronge</AppText> </AppView>: (
           <AppScrollView
             stretch
             center
